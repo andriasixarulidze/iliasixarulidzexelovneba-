@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b2420">
+<title>გელათის მონასტერი — სასწავლო პროექტი</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3ece0;--card:#fff8ec;--text:#2b2420;--muted:#6b5d52;--acc:#a8481f;--gold:#b88a2a;--dk:#2b2420;--line:#e6d7c4;color-scheme:light}
+:root[data-theme="dark"]{--bg:#1f1a17;--card:#2d2621;--text:#f0e7da;--muted:#c4b5a5;--acc:#e08a5c;--gold:#d9b25f;--dk:#14100e;--line:#51443a;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;width:100%}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans Georgian',system-ui,sans-serif;line-height:1.7;font-size:16px;padding-bottom:88px}
+header{background:linear-gradient(120deg,#211914,#493021);color:#f3ece0;padding:28px 20px}
+.hero{width:min(100%,1250px);margin:auto}
+.eyebrow{color:#e2bd70;font-size:13px}
+header h1{margin:7px 0;font-size:clamp(25px,4vw,40px);line-height:1.35}
+header p{margin:0;color:#e4d7c8;font-size:14px}
+main{width:min(100%,1250px);margin:auto;padding:20px 18px}
+.toolbar{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.toolbtn{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 13px;border-radius:22px;font:inherit;font-size:13px;cursor:pointer}
+.tab{display:none}.tab.on{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{color:var(--acc);font-size:23px;margin:4px 0 12px}
+h3{font-size:17px;margin:0 0 7px}
+p{margin:0 0 10px}
+.intro{color:var(--muted);font-size:15px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--acc);padding:16px;border-radius:12px;margin-bottom:13px}
+.card.gold{border-left-color:var(--gold)}
+.card p{color:var(--muted);font-size:14px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fact{background:var(--dk);color:#f3ece0;border-radius:12px;padding:16px}
+.fact strong{display:block;color:#e2bd70;font-size:22px}
+.fact span{font-size:13px;color:#e4d7c8}
+.timeline{border-left:2px solid var(--gold);margin:15px 0 20px 8px;padding-left:17px}
+.event{position:relative;margin:0 0 17px}
+.event:before{content:"";position:absolute;left:-24px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.year{font-weight:700;color:var(--gold);font-size:14px}
+.event p{margin:3px 0 0;color:var(--muted);font-size:14px}
+.tag{display:inline-block;background:#b88a2a20;color:var(--gold);padding:3px 9px;border-radius:20px;font-size:12px;margin-bottom:7px}
+.steps{counter-reset:step}
+.step{position:relative;padding-left:40px}
+.step:before{counter-increment:step;content:counter(step);position:absolute;left:0;top:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#211914;font-weight:700;font-size:12px}
+.quiz-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;margin:12px 0}
+.quiz-top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;margin-bottom:9px}
+.quiz-question{font-weight:700;margin-bottom:13px}
+.answers{display:grid;gap:8px}
+.answer{width:100%;text-align:left;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text);padding:11px 13px;font:inherit;font-size:14px;cursor:pointer}
+.answer:hover{border-color:var(--gold)}
+.answer:disabled{cursor:default;opacity:1}
+.answer.correct{border-color:#27834a;background:#27834a18}
+.answer.wrong{border-color:#c24c3d;background:#c24c3d18}
+.feedback{font-size:13px;margin-top:10px;min-height:20px;color:var(--muted)}
+.quiz-actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.primary{border:0;border-radius:9px;background:var(--acc);color:white;padding:11px 17px;font:inherit;cursor:pointer}
+.secondary{border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--text);padding:10px 15px;font:inherit;cursor:pointer}
+.result{background:var(--dk);color:#f3ece0;padding:18px;border-radius:12px;margin-top:15px}
+.result strong{color:#e2bd70;font-size:25px}
+.source{display:block;color:var(--acc);font-size:13px;overflow-wrap:anywhere;margin-top:5px}
+.note{text-align:center;color:var(--muted);font-size:12px;margin:22px 0 8px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--dk);display:flex;padding:5px 4px env(safe-area-inset-bottom,0px);z-index:5;box-shadow:0 -4px 18px #0002}
+nav button{flex:1;border:0;background:none;color:#cbbfae;padding:7px 3px;font:inherit;font-size:11px;min-height:65px;cursor:pointer}
+nav button span{display:block;font-size:21px;line-height:1.3;margin-bottom:3px}
+nav button.on{color:var(--gold);font-weight:700}
+@media(min-width:850px){main{padding:28px 28px}body{font-size:17px}.card{padding:19px}.tab.on{min-height:65vh}}
+@media(max-width:600px){main{padding:15px 12px}.grid{grid-template-columns:1fr}header{padding:23px 15px}body{font-size:15px}.card{padding:14px}nav button{font-size:10px}}
+:fullscreen{background:var(--bg);overflow:auto}
+:fullscreen body{min-height:100vh}
+</style>
+</head>
+<body>
+<header><div class="hero">
+<div class="eyebrow">საქართველოს კულტურული მემკვიდრეობა · იმერეთი</div>
+<h1>გელათის მონასტერი</h1>
+<p>ისტორია, კულტურული მნიშვნელობა, არსებული პრობლემები და დაცვის გზები</p>
+</div></header>
+<main>
+<div class="toolbar">
+<button class="toolbtn" onclick="toggleTheme()">🌙 / ☀️ თემა</button>
+<button class="toolbtn" onclick="toggleFullscreen()">⛶ სრულ ეკრანზე</button>
+</div>
+
+<section class="tab on" id="t0">
+<h2>გელათის ისტორია</h2>
+<p class="intro">გელათის სამონასტრო კომპლექსი შუა საუკუნეების საქართველოს ერთ-ერთი უმნიშვნელოვანესი კულტურული და საგანმანათლებლო ცენტრია. იგი ქუთაისთან ახლოს, იმერეთში მდებარეობს.</p>
+<div class="grid">
+<div class="fact"><strong>1106 წელი</strong><span>მეფე დავით აღმაშენებელმა მონასტრის მშენებლობა დაიწყო</span></div>
+<div class="fact"><strong>1994 წელი</strong><span>გელათი UNESCO-ს მსოფლიო მემკვიდრეობის სიაში შეიტანეს</span></div>
+</div>
+<h3 style="margin-top:20px">მნიშვნელოვანი თარიღები</h3>
+<div class="timeline">
+<div class="event"><div class="year">1106</div><p>მეფე დავით IV აღმაშენებელმა გელათის მონასტრის მშენებლობა დაიწყო.</p></div>
+<div class="event"><div class="year">XII საუკუნე</div><p>გელათი სამეფო და საეკლესიო ცხოვრების მნიშვნელოვან ცენტრად ჩამოყალიბდა. აშენდა მთავარი ტაძარი და შეიქმნა ცნობილი მოზაიკა.</p></div>
+<div class="event"><div class="year">XII–XIII საუკუნეები</div><p>მონასტერი ვითარდებოდა როგორც განათლებისა და მეცნიერების ცენტრი. აქ მოქმედებდა გელათის აკადემია.</p></div>
+<div class="event"><div class="year">1994</div><p>გელათის მონასტერი UNESCO-ს მსოფლიო მემკვიდრეობის ნუსხაში შეიტანეს.</p></div>
+<div class="event"><div class="year">2017</div><p>გელათი შეიტანეს საფრთხის ქვეშ მყოფი მსოფლიო მემკვიდრეობის ძეგლების სიაში.</p></div>
+</div>
+<div class="card gold"><h3>რატომ არის გელათი მნიშვნელოვანი?</h3><p>გელათი გვიჩვენებს შუა საუკუნეების ქართული არქიტექტურის, ფერწერისა და განათლების მაღალ დონეს. იგი დაკავშირებულია დავით აღმაშენებლის ეპოქასთან და საქართველოს „ოქროს ხანასთან“.</p></div>
+<div class="card"><h3>გელათის აკადემია</h3><p>აკადემია შუა საუკუნეებში ცოდნის გავრცელების მნიშვნელოვანი ადგილი იყო. აქ სწავლობდნენ და მოღვაწეობდნენ განათლებული ადამიანები.</p></div>
+<div class="card"><h3>მოზაიკა და ფრესკები</h3><p>მთავარი ტაძრის აფსიდში გამოსახულია ღვთისმშობელი ყრმით. მონასტრის კედლის მხატვრობა და მოზაიკა ქართული და ბიზანტიური ხელოვნების გამორჩეული ნიმუშებია.</p></div>
+<div class="card"><h3>დავით აღმაშენებლის საფლავი</h3><p>მონასტრის შესასვლელთან მდებარეობს დავით აღმაშენებლის საფლავი, რომელსაც განსაკუთრებული ისტორიული და სიმბოლური მნიშვნელობა აქვს.</p></div>
+</section>
+
+<section class="tab" id="t1">
+<h2>გელათის მონასტრის პრობლემები</h2>
+<p class="intro">გელათის მთავარი გამოწვევა ისტორიული ნაგებობებისა და განსაკუთრებით კედლის მხატვრობის დაცვაა.</p>
+<div class="card"><span class="tag">1 · წყლის შეღწევა</span><h3>სახურავის დაზიანება და ნესტი</h3><p>სახურავის პრობლემების გამო წყალი ტაძრებში აღწევდა. ნესტი საფრთხეს უქმნის კედლებს, ფრესკებსა და მოზაიკას.</p></div>
+<div class="card"><span class="tag">2 · მხატვრობის დაზიანება</span><h3>ფრესკების დაზიანების საფრთხე</h3><p>ტენიანობის მოქმედებამ ზოგ ადგილას შეიძლება გამოიწვიოს ბათქაშისა და საღებავის ფენის დაშლა და აქერცვლა. ფრესკებს სპეციალისტების განსაკუთრებული მეთვალყურეობა სჭირდება.</p></div>
+<div class="card"><span class="tag">3 · გარემო პირობები</span><h3>ტემპერატურისა და ტენიანობის ცვლილება</h3><p>ტემპერატურისა და ტენიანობის ცვალებადობა გავლენას ახდენს ისტორიულ მასალებზე. საჭიროა გარემო პირობების მუდმივი გაზომვა.</p></div>
+<div class="card"><span class="tag">4 · სამუშაოების სირთულე</span><h3>რესტავრაციის სიფრთხილე</h3><p>არასწორმა მასალამ ან შეუსაბამო ჩარევამ შეიძლება ორიგინალი მასალა დააზიანოს. ყველა სამუშაო უნდა ეფუძნებოდეს კვლევასა და პროფესიულ დასკვნას.</p></div>
+<div class="card"><span class="tag">5 · მართვა</span><h3>გრძელვადიანი დაცვის საჭიროება</h3><p>ძეგლის დასაცავად საჭიროა შეთანხმებული მართვის სისტემა, პასუხისმგებელი უწყებების თანამშრომლობა, დაფინანსება და სამუშაოების მონიტორინგი.</p></div>
+</section>
+
+<section class="tab" id="t2">
+<h2>პრობლემების მოგვარების გზები</h2>
+<p class="intro">გელათის დაცვა უნდა განხორციელდეს ეტაპობრივად, მეცნიერულ კვლევაზე დაყრდნობით და კულტურული მემკვიდრეობის დაცვის სტანდარტების დაცვით.</p>
+<div class="steps">
+<div class="card gold step"><h3>სახურავის გამართვა</h3><p>სახურავისა და წყალსაწრეტი სისტემის გამართული მუშაობის უზრუნველყოფა, რათა წვიმის წყალი ტაძარში აღარ აღწევდეს.</p></div>
+<div class="card gold step"><h3>ფრესკებისა და მოზაიკის კონსერვაცია</h3><p>მხატვრობის მდგომარეობა უნდა შეისწავლონ კონსერვატორებმა. გამაგრება და გაწმენდა უნდა ჩატარდეს მხოლოდ შესაბამისი კვლევის შემდეგ.</p></div>
+<div class="card gold step"><h3>მუდმივი მონიტორინგი</h3><p>საჭიროა ტენიანობის, ტემპერატურისა და ნაგებობის მდგომარეობის რეგულარული გაზომვა და შედეგების შეფასება.</p></div>
+<div class="card gold step"><h3>ერთიანი დაცვის გეგმა</h3><p>უნდა არსებობდეს გრძელვადიანი გეგმა, რომელშიც გაწერილი იქნება სამუშაოების ეტაპები, პასუხისმგებელი პირები, ვადები და დაფინანსება.</p></div>
+<div class="card gold step"><h3>საერთაშორისო თანამშრომლობა</h3><p>ქართველმა და უცხოელმა არქიტექტორებმა, ინჟინრებმა და რესტავრატორებმა უნდა ითანამშრომლონ საერთაშორისო ორგანიზაციების რეკომენდაციების გათვალისწინებით.</p></div>
+<div class="card gold step"><h3>მნახველების ინფორმირება</h3><p>ტურისტებს უნდა მიეწოდოთ ინფორმაცია ძეგლის დაცვის წესებზე. მნახველთა ნაკადი ისე უნდა დაიგეგმოს, რომ ისტორიულ გარემოს ზიანი არ მიადგეს.</p></div>
+<div class="card gold step"><h3>საზოგადოების ჩართულობა</h3><p>სკოლებს, ახალგაზრდებსა და ადგილობრივ მოსახლეობას შეუძლიათ მონაწილეობა მიიღონ საინფორმაციო კამპანიებში და ცნობიერების ამაღლების ღონისძიებებში.</p></div>
+</div>
+</section>
+
+<section class="tab" id="t3">
+<h2>ცოდნის შემოწმება — 15 კითხვა</h2>
+<p class="intro">აირჩიე თითოეული კითხვის სწორი პასუხი. ბოლოს ნახავ რამდენი ქულა დააგროვე.</p>
+<div class="quiz-top"><span id="progress">კითხვა 1 / 15</span><span id="scoreLive">ქულა: 0</span></div>
+<div id="quizArea"></div>
+<div class="quiz-actions">
+<button class="primary" id="nextBtn" onclick="nextQuestion()" disabled>შემდეგი კითხვა</button>
+<button class="secondary" onclick="restartQuiz()">თავიდან დაწყება</button>
+</div>
+<div id="result" class="result" hidden></div>
+</section>
+
+<section class="tab" id="t4">
+<h2>დასკვნა და წყაროები</h2>
+<div class="card gold"><h3>დასკვნა</h3><p>გელათის მონასტერი მხოლოდ რელიგიური ნაგებობა არ არის — ის საქართველოს ისტორიის, ხელოვნებისა და განათლების მნიშვნელოვანი ნაწილია. მისი დაცვა სახელმწიფოს, სპეციალისტებისა და საზოგადოების საერთო პასუხისმგებლობაა. მთავარი მიზანია ძეგლის ავთენტური სახის შენარჩუნება მომავალი თაობებისთვის.</p></div>
+<div class="card"><h3>რა შეგვიძლია გავაკეთოთ ჩვენ?</h3><p>შევისწავლოთ გელათის ისტორია, გავავრცელოთ სანდო ინფორმაცია, დავიცვათ კულტურული ძეგლების მონახულების წესები და პატივი ვცეთ ისტორიულ გარემოს.</p></div>
+<h3>გამოყენებული წყაროები</h3>
+<div class="card"><p><b>UNESCO — Gelati Monastery</b><a class="source" href="https://whc.unesco.org/en/list/710/" target="_blank" rel="noopener">whc.unesco.org/en/list/710/</a></p></div>
+<div class="card"><p><b>გელათის რეაბილიტაციის დოკუმენტები</b><a class="source" href="https://gelatirehabilitation.ge/" target="_blank" rel="noopener">gelatirehabilitation.ge</a></p></div>
+</section>
+<p class="note">საგანმანათლებლო პროექტი · გელათის მონასტერი</p>
+</main>
+
+<nav>
+<button class="on" onclick="showTab(0)"><span>🏛️</span>ისტორია</button>
+<button onclick="showTab(1)"><span>⚠️</span>პრობლემები</button>
+<button onclick="showTab(2)"><span>🛠️</span>გადაწყვეტა</button>
+<button onclick="showTab(3)"><span>❓</span>15 კითხვა</button>
+<button onclick="showTab(4)"><span>📚</span>დასკვნა</button>
+</nav>
+<script>
+function showTab(n){
+ document.querySelectorAll('.tab').forEach((tab,i)=>tab.classList.toggle('on',i===n));
+ document.querySelectorAll('nav button').forEach((button,i)=>button.classList.toggle('on',i===n));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleTheme(){
+ const root=document.documentElement;
+ root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+}
+async function toggleFullscreen(){
+ try{
+  if(!document.fullscreenElement) await document.documentElement.requestFullscreen();
+  else await document.exitFullscreen();
+ }catch(e){alert('სრულ ეკრანზე გადასვლა ამ ბრაუზერში ვერ მოხერხდა.');}
+}
+const questions=[
+ {q:'რომელ წელს დაიწყო გელათის მონასტრის მშენებლობა?',a:['1106 წელს','1200 წელს','1500 წელს'],c:0},
+ {q:'რომელმა მეფემ დააარსა გელათის მონასტერი?',a:['ვახტანგ გორგასალმა','დავით აღმაშენებელმა','თამარ მეფემ'],c:1},
+ {q:'საქართველოს რომელ მხარეში მდებარეობს გელათი?',a:['კახეთში','სამეგრელოში','იმერეთში'],c:2},
+ {q:'რომელ ქალაქთან ახლოს მდებარეობს გელათი?',a:['ქუთაისთან','ბათუმთან','თელავთან'],c:0},
+ {q:'რომელ წელს შეიტანეს გელათი UNESCO-ს მსოფლიო მემკვიდრეობის სიაში?',a:['1980 წელს','1994 წელს','2005 წელს'],c:1},
+ {q:'რა ფუნქცია ჰქონდა გელათის აკადემიას?',a:['სამხედრო წვრთნა','ვაჭრობა','განათლებისა და მეცნიერების განვითარება'],c:2},
+ {q:'რა არის გამოსახული მთავარი ტაძრის აფსიდის ცნობილ მოზაიკაზე?',a:['ღვთისმშობელი ყრმით','მეფის სასახლე','ზღვის პეიზაჟი'],c:0},
+ {q:'ვისი საფლავია მონასტრის შესასვლელთან?',a:['თამარ მეფის','დავით აღმაშენებლის','ერეკლე მეორის'],c:1},
+ {q:'რა საფრთხეს ქმნის სახურავიდან წყლის შეღწევა?',a:['მხოლოდ ხმაურს','მხოლოდ სიცივეს','ნესტს და მხატვრობის დაზიანებას'],c:2},
+ {q:'რა შეიძლება დააზიანოს ტენიანობამ?',a:['ფრესკები და კედლის მხატვრობა','მხოლოდ ბილიკები','მხოლოდ ხეები'],c:0},
+ {q:'ვინ უნდა შეისწავლოს და აღადგინოს დაზიანებული ფრესკები?',a:['ნებისმიერი მნახველი','სპეციალისტი კონსერვატორები','ტურისტული გიდები'],c:1},
+ {q:'რატომ არის საჭირო მუდმივი მონიტორინგი?',a:['ტურისტების დასათვლელად בלבד','ფოტოების შესაგროვებლად','ტენიანობისა და ნაგებობის მდგომარეობის გასაკონტროლებლად'],c:2},
+ {q:'რა უნდა ჰქონდეს მონასტერს დაცვისთვის?',a:['ერთიანი გრძელვადიანი გეგმა','მხოლოდ სარეკლამო გვერდი','მხოლოდ ახალი ბილიკი'],c:0},
+ {q:'როგორ შეუძლიათ ახალგაზრდებს გელათის დაცვაში მონაწილეობა?',a:['კედლებზე წარწერების გაკეთებით','ინფორმაციის გავრცელებით და ცნობიერების ამაღლებით','ფრესკების თვითნებურად შეკეთებით'],c:1},
+ {q:'რატომ უნდა დავიცვათ გელათის მონასტერი?',a:['მხოლოდ ტურისტების მოსაზიდად','რადგან ახალი შენობაა','საქართველოს ისტორიისა და კულტურის მნიშვნელოვანი ნაწილია'],c:2}
+];
+let current=0,score=0,answered=false;
+function renderQuestion(){
+ const item=questions[current];answered=false;
+ document.getElementById('progress').textContent=`კითხვა ${current+1} / ${questions.length}`;
+ document.getElementById('scoreLive').textContent=`ქულა: ${score}`;
+ document.getElementById('nextBtn').disabled=true;
+ document.getElementById('nextBtn').textContent=current===questions.length-1?'შედეგის ნახვა':'შემდეგი კითხვა';
+ document.getElementById('result').hidden=true;
+ const area=document.getElementById('quizArea');
+ area.innerHTML='';
+ const card=document.createElement('div');card.className='quiz-card';
+ const q=document.createElement('div');q.className='quiz-question';q.textContent=item.q;card.appendChild(q);
+ const answers=document.createElement('div');answers.className='answers';
+ item.a.forEach((answer,index)=>{
+  const btn=document.createElement('button');btn.className='answer';btn.textContent=String.fromCharCode(აCode(index))+') '+answer;
+  btn.onclick=()=>chooseAnswer(index,btn,answers);
+  answers.appendChild(btn);
+ });
+ card.appendChild(answers);
+ const feedback=document.createElement('div');feedback.className='feedback';feedback.id='feedback';card.appendChild(feedback);
+ area.appendChild(card);
+}
+function აCode(i){return 4304+i;}
+function chooseAnswer(index,button,container){
+ if(answered)return;answered=true;
+ const correct=questions[current].c;
+ [...container.children].forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');});
+ const feedback=document.getElementById('feedback');
+ if(index===correct){score++;button.classList.add('correct');feedback.textContent='სწორია! ყოჩაღ!';}
+ else{button.classList.add('wrong');feedback.textContent='ეს პასუხი არასწორია. სწორი პასუხი მწვანედ არის მონიშნული.';}
+ document.getElementById('scoreLive').textContent=`ქულა: ${score}`;
+ document.getElementById('nextBtn').disabled=false;
+}
+function nextQuestion(){
+ if(!answered)return;
+ if(current<questions.length-1){current++;renderQuestion();}
+ else{
+  document.getElementById('quizArea').innerHTML='';
+  document.getElementById('progress').textContent='ტესტი დასრულებულია';
+  document.getElementById('nextBtn').disabled=true;
+  const result=document.getElementById('result');result.hidden=false;
+  let message=score>=13?'შესანიშნავი შედეგია!':score>=9?'ძალიან კარგი შედეგია!':'კარგი მცდელობაა! გადაიკითხე მასალა და სცადე თავიდან.';
+  result.innerHTML=`<strong>${score} / ${questions.length}</strong><p>${message}</p>`;
+ }
+}
+function restartQuiz(){current=0;score=0;renderQuestion();}
+renderQuestion();
+</script>
+</body>
+</html>
